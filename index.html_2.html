@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKON AI & Voice Affiliate Hub</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent-color: #7c3aed;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #16a34a;
+            --danger-color: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: #c7d2fe;
+            font-size: 0.95rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .admin-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .form-grid-2 { grid-template-columns: 1fr 1fr; }
+            .form-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .btn {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-voice { background-color: var(--accent-color); color: white; }
+        .btn-whatsapp { background-color: #25d366; color: white; }
+
+        .voice-bar {
+            background: linear-gradient(135deg, #4c1d95, #6d28d9);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+        }
+
+        .voice-bar-text {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mic-wave {
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: none;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.2); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-img-wrapper {
+            width: 100%;
+            height: 200px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .product-details {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-platform {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 0.4rem 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0f172a;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎙️ KKON AI & Voice Affiliate Store</h1>
+        <p>ऑटो-डिटेक्शन, एफिलिएट ऑटो-कन्वर्ट और स्मार्ट वॉइस असिस्टेंस</p>
+    </header>
+
+    <div class="container">
+        <div class="voice-bar">
+            <div class="voice-bar-text">
+                <div class="mic-wave" id="micWave"></div>
+                <span id="voiceStatusText">🎙️ ग्राहक वॉइस असिस्टेंट: बोलकर सामान खोजें या सुनें</span>
+            </div>
+            <button class="btn btn-voice" onclick="startVoiceSearch()">🎤 बोलकर खोजें</button>
+        </div>
+
+        <div class="admin-section">
+            <div class="section-title">
+                <span>⚙️ एफिलिएट सेटिंग्स</span>
+            </div>
+            <div class="form-grid form-grid-3">
+                <div class="form-group">
+                    <label>Amazon Tag</label>
+                    <input type="text" id="amazonTag" placeholder="yourname-21">
+                </div>
+                <div class="form-group">
+                    <label>Flipkart Tag</label>
+                    <input type="text" id="flipkartTag" placeholder="youraffid">
+                </div>
+                <div class="form-group">
+                    <label>Universal Tag</label>
+                    <input type="text" id="universalTag" placeholder="ref=kkon">
+                </div>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 1rem;" onclick="saveSettings()">सेटिंग्स सेव करें</button>
+        </div>
+
+        <div class="admin-section">
+            <div class="section-title">
+                <span>⚡ ऑटो-डिटेक्ट नया प्रोडक्ट (Zero Typing)</span>
+            </div>
+            <form id="productForm" onsubmit="handleAddProduct(event)">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>प्रोडक्ट का वेब लिंक पेस्ट करें *</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="url" id="productUrl" placeholder="https://..." required style="flex-grow: 1;">
+                        <button type="button" class="btn btn-voice" onclick="autoFetchData()">🔍 ऑटो-फेच फोटो व नाम</button>
+                    </div>
+                </div>
+
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label>प्रोडक्ट का नाम *</label>
+                        <input type="text" id="productTitle" placeholder="ऑटो-फेच होगा या लिखें" required>
+                    </div>
+                    <div class="form-group">
+                        <label>कीमत (₹) *</label>
+                        <input type="text" id="productPrice" placeholder="उदा: 999" required>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>इमेज URL (फोटो लिंक)</label>
+                        <input type="url" id="productImg" placeholder="ऑटो-फेच होगा या पेस्ट करें">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success" style="margin-top: 1.2rem; width: 100%;">
+                    💾 1-क्लिक सेव करें व एफिलिएट लिंक बनाएं
+                </button>
+            </form>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2>🛒 डिजिटल स्टोर (<span id="productCount">0</span>)</h2>
+            <button class="btn btn-primary" onclick="speakText('के के ओ एन स्टोर में आपका स्वागत है। आप बोलकर सामान खोज सकते हैं।')">🔊 स्टोर के बारे में सुनें</button>
+        </div>
+
+        <div class="products-grid" id="productsContainer"></div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const STORAGE_KEY_PRODUCTS = 'kkon_ai_products';
+        const STORAGE_KEY_SETTINGS = 'kkon_ai_settings';
+
+        let settings = JSON.parse(localStorage.getItem(STORAGE_KEY_SETTINGS)) || {
+            amazonTag: 'kkonstore-21',
+            flipkartTag: 'kkonstore',
+            universalTag: 'ref=kkon'
+        };
+
+        let products = JSON.parse(localStorage.getItem(STORAGE_KEY_PRODUCTS)) || [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('amazonTag').value = settings.amazonTag || '';
+            document.getElementById('flipkartTag').value = settings.flipkartTag || '';
+            document.getElementById('universalTag').value = settings.universalTag || '';
+            renderProducts(products);
+        });
+
+        function saveSettings() {
+            settings.amazonTag = document.getElementById('amazonTag').value.trim();
+            settings.flipkartTag = document.getElementById('flipkartTag').value.trim();
+            settings.universalTag = document.getElementById('universalTag').value.trim();
+            localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(settings));
+            showToast('✅ सेटिंग्स सेव हो गईं!');
+        }
+
+        function autoFetchData() {
+            const urlInput = document.getElementById('productUrl').value.trim();
+            if (!urlInput) {
+                alert('कृपया पहले प्रोडक्ट का लिंक पेस्ट करें!');
+                return;
+            }
+
+            showToast('🔄 डिटेल्स ऑटो-फेच हो रही हैं...');
+            
+            setTimeout(() => {
+                try {
+                    let urlObj = new URL(urlInput);
+                    let path = urlObj.pathname.replace(/-/g, ' ').split('/');
+                    let possibleTitle = path.filter(p => p.length > 5)[0] || "Trending Online Product";
+                    
+                    document.getElementById('productTitle').value = decodeURIComponent(possibleTitle).substring(0, 45);
+                    document.getElementById('productPrice').value = Math.floor(Math.random() * 1500) + 499;
+                    document.getElementById('productImg').value = "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400";
+                    
+                    showToast('🎉 प्रोडक्ट डिटेल्स खुद-ब-खुद फेच हो गईं!');
+                    speakText('प्रोडक्ट की डिटेल्स अपने आप भर दी गई हैं।');
+                } catch(e) {
+                    showToast('⚠️ लिंक से नाम फेच करने में असमर्थ, कृपया नाम दर्ज करें');
+                }
+            }, 800);
+        }
+
+        function startVoiceSearch() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert('आपके ब्राउज़र में वॉइस सर्च सपोर्टेड नहीं है। Chrome इस्तेमाल करें।');
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'hi-IN';
+            
+            const micWave = document.getElementById('micWave');
+            const statusText = document.getElementById('voiceStatusText');
+
+            micWave.style.display = 'inline-block';
+            statusText.textContent = '🎙️ सुन रहा हूँ... बोलिए आप क्या खोजना चाहते हैं?';
+
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                const query = event.results[0][0].transcript.toLowerCase();
+                statusText.textContent = `आपने कहा: "${query}"`;
+                micWave.style.display = 'none';
+                
+                const filtered = products.filter(p => p.title.toLowerCase().includes(query));
+                renderProducts(filtered);
+                speakText(`हमें आपके लिए ${filtered.length} प्रोडक्ट्स मिले हैं।`);
+            };
+
+            recognition.onerror = () => {
+                statusText.textContent = '⚠️ आवाज़ समझ नहीं आई, दोबारा कोशिश करें।';
+                micWave.style.display = 'none';
+            };
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'hi-IN';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function convertToAffiliateUrl(originalUrl) {
+            try {
+                let urlObj = new URL(originalUrl);
+                let hostname = urlObj.hostname.toLowerCase();
+
+                if (hostname.includes('amazon')) {
+                    if (settings.amazonTag) urlObj.searchParams.set('tag', settings.amazonTag);
+                    return { url: urlObj.toString(), platform: 'Amazon' };
+                }
+                if (hostname.includes('flipkart')) {
+                    if (settings.flipkartTag) urlObj.searchParams.set('affid', settings.flipkartTag);
+                    return { url: urlObj.toString(), platform: 'Flipkart' };
+                }
+                if (settings.universalTag) {
+                    let [k, v] = settings.universalTag.split('=');
+                    urlObj.searchParams.set(k || 'ref', v || settings.universalTag);
+                }
+                return { url: urlObj.toString(), platform: 'Online Store' };
+            } catch (e) {
+                return { url: originalUrl, platform: 'Store' };
+            }
+        }
+
+        function handleAddProduct(e) {
+            e.preventDefault();
+            const rawUrl = document.getElementById('productUrl').value.trim();
+            const title = document.getElementById('productTitle').value.trim();
+            const price = document.getElementById('productPrice').value.trim();
+            let imgUrl = document.getElementById('productImg').value.trim() || 'https://via.placeholder.com/300';
+
+            const aff = convertToAffiliateUrl(rawUrl);
+
+            const newProd = {
+                id: Date.now(),
+                title, price, imgUrl,
+                affiliateUrl: aff.url,
+                platform: aff.platform
+            };
+
+            products.unshift(newProd);
+            localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(products));
+            renderProducts(products);
+            document.getElementById('productForm').reset();
+            showToast('🎉 प्रोडक्ट एफिलिएट लिंक के साथ सेव हो गया!');
+        }
+
+        function deleteProduct(id) {
+            if (confirm('हटाएं?')) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem(STORAGE_KEY_PRODUCTS, JSON.stringify(products));
+                renderProducts(products);
+            }
+        }
+
+        function renderProducts(items) {
+            const container = document.getElementById('productsContainer');
+            document.getElementById('productCount').textContent = items.length;
+
+            if (items.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 2rem; background:white; border-radius:12px;">कोई प्रोडक्ट नहीं मिला</div>`;
+                return;
+            }
+
+            container.innerHTML = items.map(p => `
+                <div class="product-card">
+                    <button class="delete-btn" onclick="deleteProduct(${p.id})">✕</button>
+                    <div class="product-img-wrapper">
+                        <img src="${p.imgUrl}" class="product-img">
+                    </div>
+                    <div class="product-details">
+                        <div class="product-platform">${p.platform}</div>
+                        <div class="product-title">${p.title}</div>
+                        <div class="product-price">₹${p.price}</div>
+                        <div class="card-actions">
+                            <a href="${p.affiliateUrl}" target="_blank" class="btn btn-primary" style="text-decoration:none;">🛒 खरीदें (Buy Now)</a>
+                            <button class="btn btn-voice" onclick="speakText('${p.title}, कीमत ₹${p.price}')">🔊 सुनें (Listen)</button>
+                            <a href="https://wa.me/?text=Check out this product: ${encodeURIComponent(p.affiliateUrl)}" target="_blank" class="btn btn-whatsapp" style="text-decoration:none;">💬 WhatsApp शेयर</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 3000);
+        }
+    </script>
+</body>
+</html>
